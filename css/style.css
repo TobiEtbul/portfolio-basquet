@@ -1,0 +1,52 @@
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{background:#082241}
+body{font-family:"Lalezar",system-ui,sans-serif;overflow-x:hidden}
+
+#loader{position:fixed;inset:0;z-index:99;background:#082241;color:#fff;display:flex;align-items:center;justify-content:center;font:400 40px "Lalezar",sans-serif;transition:opacity .4s}
+#loader.done{opacity:0;pointer-events:none}
+
+/* escenario fijo 1440x900; main.js lo escala y lo centra */
+#stage{position:fixed;left:0;top:0;width:1440px;height:900px;transform-origin:0 0;will-change:transform;
+  --ex:0px;--ey:0px}
+.a{position:absolute}
+.t{font-family:"Lalezar",sans-serif;font-weight:400;font-style:normal;line-height:1.552;white-space:nowrap;color:#00295a;text-decoration:none}
+.flip{transform:scaleX(-1)}
+img{display:block;max-width:none;user-select:none;-webkit-user-drag:none}
+
+/* paneles: el fondo se estira más allá del escenario para cubrir las franjas cuando la ventana no es 16:10 */
+.panel{position:absolute;left:0;top:0;width:1440px;height:900px;will-change:transform}
+.panel>.bg{position:absolute;left:calc(var(--ex) * -1);top:calc(var(--ey) * -1);
+  width:calc(1440px + var(--ex) * 2);height:calc(900px + var(--ey) * 2 + 3000px)}
+#intro{z-index:1}#time{z-index:2}#char{z-index:3}#poster{z-index:4}#ball{z-index:5}#hoop{z-index:6}#contact{z-index:7}
+
+/* aro: caja de 234x344 que muestra el 70% izquierdo de la imagen, igual que el Figma */
+.hoop{width:234px;height:344px;overflow:hidden;pointer-events:none}
+.hoop img{position:absolute;left:-.03%;top:0;height:100%;width:141.67%}
+#hoop{left:0;top:242px;will-change:transform}
+
+/* textos */
+.yr{font-size:80px;line-height:normal;color:#082241}
+.cap{font-size:28px;color:#fff;width:205px}
+.st{font-size:20px}
+.ct{font-size:50px}
+#t-tobias,#t-etbul{opacity:0;transform:translateY(46px) scale(.94);transform-origin:50% 100%;
+  transition:opacity .22s ease-out,transform .32s cubic-bezier(.2,1.6,.4,1)}
+#t-tobias.on,#t-etbul.on{opacity:1;transform:none}
+
+/* secuencias de frames: se apilan y se prende una sola */
+#char,#pase{pointer-events:none}
+#char img,#pase img{position:absolute;left:0;top:0;width:100%;height:100%;visibility:hidden}
+#char img.on,#pase img.on{visibility:visible}
+#char{transform-origin:50% 50%}
+#pase img{transform:scaleX(-1)}
+
+/* pelota: una sola imagen (1536x1024) que se mueve con transform */
+#ball{left:0;top:0;width:1536px;height:1024px;transform-origin:0 0;will-change:transform;pointer-events:none}
+#ball img{width:100%;height:100%}
+
+#contact{left:0;top:0;width:1440px;height:900px;opacity:0;pointer-events:none}
+#contact.on{pointer-events:auto}
+#contact a:hover{opacity:.8}
+
+#spacer{width:1px;pointer-events:none}
+@media (prefers-reduced-motion:reduce){#t-tobias,#t-etbul{transition:none}}
